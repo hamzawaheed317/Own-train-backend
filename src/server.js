@@ -2,37 +2,37 @@ require("dotenv").config();
 const cors = require("cors");
 const errorHandler = require("../middlewares/errorHandler");
 const connectToMongoDbCluster = require("../utils/db");
-const logger = require("../utils/logger");
+// const logger = require("../utils/logger");
 const adminRoutes = require("../routes/adminRoutes");
 const userRoutes = require("../routes/userRoutes");
 const express = require("express");
 const app = express();
 const feedbackRoutes = require("../routes/FeedbackRoutes");
-const { initializeModel } = require("../utils/embeddingService");
+// const { initializeModel } = require("../utils/embeddingService");
 const cookieParser = require("cookie-parser");
-const userAuth = require("../middlewares/userAuth");
+// const userAuth = require("../middlewares/userAuth");
 app.use(cookieParser());
 // Enhanced CORS configuration
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {
-//       const allowedOrigins = [
-//         "http://localhost:5173",
-//         "http://localhost:5000",
-//         process.env.FRONTEND_URL,
-//       ];
-//       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//     exposedHeaders: ["set-cookie"],
-//   })
-// );
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "http://localhost:5000",
+        process.env.FRONTEND_URL,
+      ];
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    exposedHeaders: ["set-cookie"],
+  })
+);
 
 // Serve the 'uploads' folder statically
 app.use("/uploads", express.static("uploads"));
@@ -61,9 +61,6 @@ app.use("/feedback", feedbackRoutes);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5001;
-app.get('/', (req, res) => {
-  res.send('Server is running!');
-});
 
 app.listen(PORT, () => {
   logger.info(`Server started on port ${PORT}`);
