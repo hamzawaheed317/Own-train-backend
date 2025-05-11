@@ -1,16 +1,16 @@
 require("dotenv").config();
 const cors = require("cors");
-const errorHandler = require("./middlewares/errorHandler");
-const connectToMongoDbCluster = require("./utils/db");
-const logger = require("./utils/logger");
-const adminRoutes = require("./routes/adminRoutes");
-const userRoutes = require("./routes/userRoutes");
+const errorHandler = require("../middlewares/errorHandler");
+const connectToMongoDbCluster = require("../utils/db");
+const logger = require("../utils/logger");
+const adminRoutes = require("../routes/adminRoutes");
+const userRoutes = require("../routes/userRoutes");
 const express = require("express");
 const app = express();
-const feedbackRoutes = require("./routes/FeedbackRoutes");
-const { initializeModel } = require("./utils/embeddingService");
+const feedbackRoutes = require("../routes/FeedbackRoutes");
+const { initializeModel } = require("../utils/embeddingService");
 const cookieParser = require("cookie-parser");
-const userAuth = require("./middlewares/userAuth");
+const userAuth = require("../middlewares/userAuth");
 app.use(cookieParser());
 // Enhanced CORS configuration
 app.use(
