@@ -1,6 +1,6 @@
 // aiServices/vectorSearch.js
 const TextChunkSchema = require("../models/TextChunkSchema");
-const logger = require("../utils/logger");
+// const ///logger = require("../utils////logger");
 
 async function findRelevantChunks(queryEmbedding, limit = 5, adminId) {
   try {
@@ -46,11 +46,7 @@ async function findRelevantChunks(queryEmbedding, limit = 5, adminId) {
 
     return results.sort((a, b) => b.score - a.score);
   } catch (error) {
-    logger.error("Vector search failed:", {
-      error: error.message,
-      queryDims: queryEmbedding?.length,
-      stack: error.stack,
-    });
+
     throw new Error("Failed to perform vector search");
   }
 }

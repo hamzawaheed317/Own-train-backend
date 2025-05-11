@@ -1,8 +1,8 @@
 // controllers/chatController.js
 const { findRelevantChunks } = require("../aiServices/vectorSearch");
 const { embedQuery } = require("../aiServices/embeddingService");
-const { generateResponse } = require("../aiServices/ollamaService");
-const logger = require("../utils/logger");
+// const { generateResponse } = require("../aiServices/ollamaService");
+
 const path = require("path");
 const fs = require("fs");
 const { askGroqWithContext } = require("../aiServices/GrokAPI");
@@ -64,11 +64,6 @@ async function handleChatQuery(req, res) {
     let finalQuery = await enrichWithOpenAI(query);
     // console.log(finalQuery);
     // 1. Embed the user query
-    const queryEmbedding = await embedQuery(finalQuery);
-    logger.info("Query embedded successfully", {
-      dims: queryEmbedding.length,
-      sample: queryEmbedding.slice(0, 3), // Show first 3 elements for verification
-    });
 
     // console.log("queryEmbeding", queryEmbedding);
 
@@ -79,10 +74,7 @@ async function handleChatQuery(req, res) {
       adminId
     );
     if (!relevantChunks.length) {
-      logger.warn("No relevant chunks found", {
-        query: query.substring(0, 50),
-      });
-
+     
       // return res.status(404).json({ message: "No relevant information found" });
     }
 
@@ -130,11 +122,7 @@ async function handleChatQuery(req, res) {
       });
     }
   } catch (error) {
-    console.log(error);
-    logger.error("Chat processing failed:", {
-      error: error.message,
-      query: req.body.query?.substring(0, 50) || "Empty query",
-    });
+    
     res.status(500).json({
       error: "Failed to process query",
       ...(process.env.NODE_ENV === "development" && {

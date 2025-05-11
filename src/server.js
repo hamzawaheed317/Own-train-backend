@@ -2,7 +2,7 @@ require("dotenv").config();
 const cors = require("cors");
 const errorHandler = require("../middlewares/errorHandler");
 const connectToMongoDbCluster = require("../utils/db");
-// const logger = require("../utils/logger");
+// const ///logger = require("../utils////logger");
 const adminRoutes = require("../routes/adminRoutes");
 const userRoutes = require("../routes/userRoutes");
 const express = require("express");
@@ -63,7 +63,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
-  logger.info(`Server started on port ${PORT}`);
+  ///logger.info(`Server started on port ${PORT}`);
 });
 
 //EDGE CASES

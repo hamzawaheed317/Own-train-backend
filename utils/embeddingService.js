@@ -1,4 +1,4 @@
-const logger = require("./logger");
+
 
 let extractor;
 
@@ -13,18 +13,14 @@ async function initializeModel() {
         {
           quantized: true,
           progress_callback: (progress) => {
-            logger.info(
-              `Model download progress: ${Math.round(
-                (progress.loaded / progress.total) * 100
-              )}%`
-            );
+      
           },
         }
       );
       logger.info("Embedding model ready");
       return extractor;
     } catch (error) {
-      logger.error("Model initialization failed:", error);
+
       throw new Error("Failed to initialize embedding model");
     }
   }
@@ -51,7 +47,7 @@ async function createEmbeddings(inputChunks) {
 
   try {
     const model = await initializeModel();
-    logger.info(`Processing ${chunks.length} chunks`);
+    ///logger.info(`Processing ${chunks.length} chunks`);
 
     // ڈائنامک بیچ سائز مینجمنٹ
     const batchSize = Math.min(4, Math.max(1, Math.floor(4 / chunks.length)));
@@ -76,10 +72,7 @@ async function createEmbeddings(inputChunks) {
           }))
         );
       } catch (batchError) {
-        logger.error(`Batch ${i / batchSize + 1} failed`, {
-          chunks: texts.map((t) => t.slice(0, 20)),
-          error: batchError.message,
-        });
+       
         throw batchError;
       }
     }
@@ -87,11 +80,7 @@ async function createEmbeddings(inputChunks) {
     const result = allEmbeddings.map((e) => e.embedding);
     return Array.isArray(inputChunks) ? result : result[0];
   } catch (error) {
-    logger.error("Embedding generation failed", {
-      inputType: Array.isArray(inputChunks) ? "array" : "single",
-      chunkCount: chunks.length,
-      lastChunkText: chunks[chunks.length - 1]?.text?.slice(0, 20) || "N/A",
-    });
+    
     throw new Error(`Embedding failed: ${error.message}`);
   }
 }

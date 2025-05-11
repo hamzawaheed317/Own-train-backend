@@ -1,4 +1,4 @@
-const logger = require("../utils/logger");
+// const ///logger = require("../utils////logger");
 
 let extractor;
 
@@ -13,18 +13,14 @@ async function initializeModel() {
         {
           quantized: true,
           progress_callback: (progress) => {
-            logger.info(
-              `Model download progress: ${Math.round(
-                (progress.loaded / progress.total) * 100
-              )}%`
-            );
+            
           },
         }
       );
-      logger.info("Embedding model ready");
+      ///logger.info("Embedding model ready");
       return extractor;
     } catch (error) {
-      logger.error("Model initialization failed:", error);
+      ///logger.error("Model initialization failed:", error);
       throw new Error("Failed to initialize embedding model");
     }
   }
@@ -41,7 +37,7 @@ async function createEmbeddings(chunks) {
 
   try {
     const model = await initializeModel();
-    logger.info(`Creating embeddings for ${chunks.length} chunks`);
+    ///logger.info(`Creating embeddings for ${chunks.length} chunks`);
 
     // Process in batches for memory efficiency
     const batchSize = 4; // Reduced for better memory management on your i7-8th Gen
@@ -54,12 +50,7 @@ async function createEmbeddings(chunks) {
 
     for (let i = 0; i < texts.length; i += batchSize) {
       const batch = texts.slice(i, i + batchSize);
-      logger.debug(
-        `Processing batch ${i / batchSize + 1} of ${Math.ceil(
-          texts.length / batchSize
-        )}`
-      );
-
+ 
       const output = await model(batch, {
         pooling: "mean",
         normalize: true,
@@ -69,14 +60,10 @@ async function createEmbeddings(chunks) {
       allEmbeddings.push(...batchEmbeddings);
     }
 
-    logger.info(`Successfully created ${allEmbeddings.length} embeddings`);
+    ///logger.info(`Successfully created ${allEmbeddings.length} embeddings`);
     return allEmbeddings;
   } catch (error) {
-    logger.error("Embedding generation failed:", {
-      error: error.message,
-      chunkCount: chunks?.length,
-      lastChunk: chunks?.slice(-1)[0]?.substring(0, 50),
-    });
+
     throw error;
   }
 }
@@ -112,7 +99,7 @@ async function embedQuery(query) {
 
     return embedding;
   } catch (error) {
-    logger.error("Query embedding failed:", error);
+    ///logger.error("Query embedding failed:", error);
     throw error;
   }
 }

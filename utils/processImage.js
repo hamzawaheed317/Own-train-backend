@@ -107,7 +107,7 @@ async function extractTextFromImage(imagePath) {
   let worker;
   try {
     worker = await createWorker({
-      logger: (m) => console.log(m), // Optional logging
+      ///logger: (m) => console.log(m), // Optional logging
       errorHandler: (err) => console.error(err),
     });
 

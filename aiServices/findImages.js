@@ -1,6 +1,6 @@
 // controllers/imageSearch.js
 const Image = require("../models/ImageSchema");
-const logger = require("../utils/logger");
+// const ///logger = require("../utils////logger");
 
 async function findMatchedImages(adminId, queryEmbedding, limit = 5) {
   try {
@@ -56,11 +56,7 @@ async function findMatchedImages(adminId, queryEmbedding, limit = 5) {
       Categories: img.categories,
     }));
   } catch (error) {
-    logger.error("Image vector search failed:", {
-      error: error.message,
-      queryDims: queryEmbedding?.length,
-      stack: error.stack,
-    });
+  
     return []; // Return empty array on failure
   }
 }

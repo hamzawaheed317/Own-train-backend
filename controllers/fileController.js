@@ -6,7 +6,6 @@ const path = require("path");
 const { extractAndProcessText } = require("../utils/extractText");
 const { createEmbeddings } = require("../utils/embeddingService");
 const { chunkText } = require("../utils/textUtils");
-const logger = require("../utils/logger");
 const { processImage } = require("../utils/processImage");
 const { enrichWithOpenAI } = require("./enrichText");
 
