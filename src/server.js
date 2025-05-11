@@ -61,6 +61,9 @@ app.use("/feedback", feedbackRoutes);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5001;
+app.get('/', (req, res) => {
+  res.send('Server is running!');
+});
 
 app.listen(PORT, () => {
   logger.info(`Server started on port ${PORT}`);
