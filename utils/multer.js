@@ -12,20 +12,21 @@ if (!fs.existsSync(uploadDir)) {
 
 // Configure storage
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    try {
-      const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-      const sanitizedName = file.originalname.replace(/[^a-zA-Z0-9._-]/g, "-");
-      const extension = path.extname(file.originalname);
-      const filename = `${sanitizedName}-${uniqueSuffix}${extension}`;
-      cb(null, filename);
-    } catch (err) {
-      cb(err);
-    }
-  },
+  //  ::::This is hided now::::
+  // destination: (req, file, cb) => {
+  //   cb(null, uploadDir);
+  // },
+  // filename: (req, file, cb) => {
+  //   try {
+  //     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+  //     const sanitizedName = file.originalname.replace(/[^a-zA-Z0-9._-]/g, "-");
+  //     const extension = path.extname(file.originalname);
+  //     const filename = `${sanitizedName}-${uniqueSuffix}${extension}`;
+  //     cb(null, filename);
+  //   } catch (err) {
+  //     cb(err);
+  //   }
+  // },
 });
 
 // File type validation
