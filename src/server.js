@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 
 // Serve the 'uploads' folder statically
-app.use("/uploads", express.static("uploads"));
+// app.use("/uploads", express.static("uploads"));
 
 // // Pre-loading during starting
 // initializeModel().then(() => {

@@ -2,7 +2,7 @@ const express = require("express");
 const fileController = require("../controllers/fileController");
 const { auth, isAdmin } = require("../middlewares/auth");
 const registerAdmin = require("../middlewares/registerAdmin");
-const { uploadSingle, uploadMultiple } = require("../utils/multer");
+// const { uploadSingle, uploadMultiple } = require("../utils/multer");
 const loginAdmin = require("../middlewares/loginAdmin");
 const userController = require("../controllers/userController");
 const User = require("../models/User");
@@ -32,15 +32,15 @@ router.get("/admin-pannel", auth, (req, res) => {
 });
 
 // Single file upload
-router.post("/upload", auth, uploadSingle, fileController.uploadFile);
+// router.post("/upload", auth, uploadSingle, fileController.uploadFile);
 
-// Multiple files upload
-router.post(
-  "/upload-multiple",
-  auth,
-  uploadMultiple,
-  fileController.uploadFiles
-);
+// // Multiple files upload
+// router.post(
+//   "/upload-multiple",
+//   auth,
+//   uploadMultiple,
+//   fileController.uploadFiles
+// );
 
 //other basic routes
 
