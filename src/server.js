@@ -1,52 +1,38 @@
 require("dotenv").config();
-const cors = require("cors");
 const errorHandler = require("../middlewares/errorHandler");
 const connectToMongoDbCluster = require("../utils/db");
-// const ///logger = require("../utils////logger");
 const adminRoutes = require("../routes/adminRoutes");
 const userRoutes = require("../routes/userRoutes");
 const express = require("express");
+const cors = require('cors');
+
 const app = express();
 const feedbackRoutes = require("../routes/FeedbackRoutes");
-// const { initializeModel } = require("../utils/embeddingService");
-const cookieParser = require("cookie-parser");
-// const userAuth = require("../middlewares/userAuth");
-app.use(cookieParser());
 
-
-// Serve the 'uploads' folder statically
-// app.use("/uploads", express.static("uploads"));
-
-// // Pre-loading during starting
-// initializeModel().then(() => {
-//   console.log("Embedding model ready");
-//   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// });
-
-//connection to db
 connectToMongoDbCluster();
 
-//default middlewares
+// Add this before any routes
+app.use(cors({
+   origin: process.env.FRONTEND_URL, // Replace with your frontend URL
+  credentials: true // if you're using cookies or auth headers
+}));
+// Default middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//routes
-// app.use("/user");
-// app.use("/chat");
 
+// Routes
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
-console.log("gpoind from server");
 app.use("/feedback", feedbackRoutes);
-//middlewares -> auth middleware and error handler middleware
+
+// Auth middleware and error handler middleware
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
-  ///logger.info(`Server started on port ${PORT}`);
+  console.log(`Server started on port ${PORT}`);
 });
-
-//EDGE CASES
 
 // Handle uncaught exceptions
 process.on("uncaughtException", (err) => {
@@ -59,7 +45,6 @@ process.on("uncaughtException", (err) => {
 process.on("unhandledRejection", (err) => {
   console.error("UNHANDLED REJECTION! Shutting down...");
   console.error(err.name, err.message);
-  server.close(() => {
-    process.exit(1);
-  });
+  process.exit(1);
 });
+

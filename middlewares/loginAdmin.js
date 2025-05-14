@@ -17,6 +17,7 @@ const loginAdmin = async (req, res) => {
     const client = await Admin.findOne({ email: email });
 
     console.log("Client Details", client);
+    
 
     if (client) {
       req.admin = client;
@@ -62,6 +63,11 @@ const loginAdmin = async (req, res) => {
             role: client.role,
           },
         });
+    }else{
+      res.status(400).json({
+        success: false,
+        message: "Invalid credentials",
+      });
     }
   } catch (error) {
     console.error("Error in registerAdmin:", error);
