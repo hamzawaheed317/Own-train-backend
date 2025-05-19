@@ -18,6 +18,7 @@ app.use(cors({
   origin: [
     "https://www.owntrain.co",
     "http://localhost:5173",
+    "https://own-train-frontend.vercel.app"
   ],
   credentials: true
 }));
