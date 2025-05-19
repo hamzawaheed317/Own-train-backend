@@ -15,7 +15,10 @@ connectToMongoDbCluster();
 
 // ✅ Middleware setup
 app.use(cors({
-  origin: "https://www.owntrain.co",
+  origin: [
+    "https://www.owntrain.co",
+    "http://localhost:5173",
+  ],
   credentials: true
 }));
 app.use(cookieParser()); // ✅ Cookie parser
