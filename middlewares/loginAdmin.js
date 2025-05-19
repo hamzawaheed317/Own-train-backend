@@ -17,7 +17,7 @@ const loginAdmin = async (req, res) => {
     const client = await Admin.findOne({ email: email });
 
     console.log("Client Details", client);
-    
+
 
     if (client) {
       req.admin = client;
@@ -39,32 +39,31 @@ const loginAdmin = async (req, res) => {
 
       console.log("Token Value ", token);
       res
-        .cookie("accessToken", token, {
-          httpOnly: false,
-          secure: true,
-          maxAge: 2 * 60 * 60 * 1000,
-        
-        })
-        .status(200)
-        .json({
-          success: true,
-          message: "Login successful",
-          user: {
-            id: client._id,
-            email: client.email,
-            role: client.role,
-          },
-        });
-    }else{
-      res.status(400).json({
-        success: false,
-        message: "Invalid credentials",
-      });
-    }
+      res.cookie("accessToken", token, {
+        httpOnly: true,          // ✅ Prevents XSS (always use for auth cookies)
+        secure: true,            // ✅ Required for HTTPS
+        sameSite: "None",        // ✅ Required for cross-site cookies
+        maxAge: 2 * 60 * 60 * 1000, // 2 hours
+      }).status(200)
+  .json({
+    success: true,
+    message: "Login successful",
+    user: {
+      id: client._id,
+      email: client.email,
+      role: client.role,
+    },
+  });
+    }else {
+  res.status(400).json({
+    success: false,
+    message: "Invalid credentials",
+  });
+}
   } catch (error) {
-    console.error("Error in registerAdmin:", error);
-    res.status(500).json({ message: "Server error" });
-  }
+  console.error("Error in registerAdmin:", error);
+  res.status(500).json({ message: "Server error" });
+}
 };
 
 module.exports = loginAdmin;
