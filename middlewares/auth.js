@@ -7,9 +7,9 @@ module.exports = {
     try {
       console.log("Authentication Started");
       // console.log("Req obj", req);
-      console.log("Req cookies", req.cookies);
+      console.log("Req cookies", req?.cookies);
 
-      const token = req.cookies.accessToken;
+      const token = req?.cookies?.accessToken;
 
       console.log("token", token);
       if (!token) return res.status(401).json({ message: "Not authenticated" });
@@ -25,6 +25,7 @@ module.exports = {
       console.log("Authentication Completed");
       next();
     } catch (err) {
+      console.log("Error in auth middleware", err);
       return res.status(401).json({ message: "Invalid token" });
     }
   },
