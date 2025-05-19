@@ -17,7 +17,6 @@ connectToMongoDbCluster();
 app.use(cors({
   origin: [
     "https://www.owntrain.co",
-    "http://localhost:5173",
     "https://own-train-frontend.vercel.app"
   ],
   credentials: true
@@ -44,12 +43,16 @@ app.listen(PORT, () => {
 process.on("uncaughtException", (err) => {
   console.error("UNCAUGHT EXCEPTION! Shutting down...");
   console.error(err.name, err.message);
-  process.exit(1);
+  server.close(() => {
+    process.exit(1);
+  });
 });
 
 process.on("unhandledRejection", (err) => {
   console.error("UNHANDLED REJECTION! Shutting down...");
   console.error(err.name, err.message);
-  process.exit(1);
+  server.close(() => {
+    process.exit(1);
+  });
 });
 
