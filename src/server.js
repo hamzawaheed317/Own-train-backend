@@ -17,7 +17,8 @@ connectToMongoDbCluster();
 app.use(cors({
   origin: [
     "https://www.owntrain.co",
-    "https://own-train-frontend.vercel.app"
+    "https://own-train-frontend.vercel.app",
+    "http://localhost:5173"
   ],
   credentials: true
 }));

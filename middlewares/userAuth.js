@@ -49,7 +49,7 @@ const userAuth = async (req, res, next) => {
     // 3. Create new user if not found
     if (!user) {
       user = new User({
-        admin: admin._id,
+        admin: admin?._id,
         name: req.body.name || "Anonymous",
         email,
         telephone: telephone || null,

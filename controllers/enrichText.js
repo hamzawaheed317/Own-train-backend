@@ -24,6 +24,8 @@ async function enrichWithOpenAI(paragraph) {
 
     const data = await response.json();
 
+    console.log(data, "Data from OpenAI API");
+
     // Debug: Print full response in case of error
     if (!data.choices || !data.choices[0]) {
       console.error("❌ OpenAI API error response:", data);
