@@ -41,17 +41,9 @@ const loginAdmin = async (req, res) => {
       res
         .cookie("accessToken", token, {
           httpOnly: false,
-          secure: false,
-          // secure: process.env.NODE_ENV === "production", other than https calls , it will drop cookie silently
-          // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+          secure: true,
           maxAge: 2 * 60 * 60 * 1000,
-          // path: "/",
-          // domain:
-          //   process.env.NODE_ENV === "production"
-          //     ? ".yourdomain.com"
-          //     : undefined,
-
-          //the things that i have been commented , are production grade things if set this then only the request from the secure https website should read the cookies , as i am having the local host frotend , therefore, the cookies are droping silently
+        
         })
         .status(200)
         .json({
